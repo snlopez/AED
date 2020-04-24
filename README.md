@@ -1,5 +1,6 @@
-# AED
-Santiago Nahuel López - K1051
-
-Soy estudiante de ingenieria electrónica, acabo de iniciar la simultaneidad con ingenieria en sistemas.
-Es la primera vez que curso esta materia.
+Algoritmos y Estructuras de Datos
+K1051
+2020, cursada anual
+146.788-8
+López
+Santiago
