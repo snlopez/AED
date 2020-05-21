@@ -1,7 +1,7 @@
 /*
     Ejemplo Tipos
     snlopez
-    20200430
+    20200521
 
     Tipos de datos: bool, int, char, string, unsigned, double
 */
