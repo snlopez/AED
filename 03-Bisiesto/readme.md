@@ -1,4 +1,4 @@
-* Objetivo
+* Objetivo:
 Dado un año, determinar si es bisiesto
 
 * Restricciones
@@ -10,4 +10,4 @@ Dado un año, determinar si es bisiesto
 _________________________________________________________________________________________
 
 * Logica de la funcion
-IsBisiesto: N -> B / p ^ (¬q v r)
+IsBisiesto: N --> B / p ^ (¬q v r)
