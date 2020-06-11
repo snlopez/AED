@@ -10,13 +10,18 @@ using namespace std;
 
 bool IsBisiesto(int);
 
-int main (void){
+int main (){
 
-int year;
+    int year;
+    bool res;
+
     cout << "Ingrese un año";
     cin >> year;
+    
+    res = IsBisiesto(year);
+    cout << res;
 
-    cout << IsBisiesto(year);
+    system("pause");
 
     return 0;
 }
