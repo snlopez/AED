@@ -1,5 +1,5 @@
 # Algoritmos y Estructuras de Datos
-_Este es un repositorio público con los trabajos practicos de la materia "Algoritmos y Estructuras de Datos" de la Carrera de ING. en Sistemas de la UTN regional Buenos Aires._
+_Este es un repositorio público con los trabajos practicos de la materia **Algoritmos y Estructuras de Datos** de la Carrera de ING. en Sistemas de la UTN regional Buenos Aires._
 
 ## Informacion de la cursada
 
