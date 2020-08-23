@@ -32,7 +32,7 @@ _Desde el **CMD** posicionarse dentro de la carpeta del proyecto_
 
 _Compilar el **EjemploTipos.cpp** y crear como salida el ejecutable **Ejemplotipos.exe**_
 ```
-g++ EjemploTipos.cpp -o tipos.exe
+g++ EjemploTipos.cpp -o Ejepomplotipos.exe
 ```
 
 _Ejecutar **tipos.exe**_
