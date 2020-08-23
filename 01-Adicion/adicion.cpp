@@ -56,7 +56,7 @@ int main(){
 }
 
 void sumar(void){
-    float a = 0, b = 0;
+    float a = 0, b = 0, r = 0;
     
     cout << "Primer valor: ";
     cin >> a;
@@ -64,5 +64,7 @@ void sumar(void){
     cout << "Segundo valor: ";
     cin >> b;
 
-    cout << "El resultado es: " << a << " + " << b << " = " << a + b << "\n";
+    r = a + b;
+
+    cout << "El resultado es: " << a << " + " << b << " = " << r << "\n";
 }
