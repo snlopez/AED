@@ -19,7 +19,7 @@ _La funcion **suma()** le pedira al usuario que ingrese los valores a sumar, par
 _Finalmente la funcion main le preguntará al usuario si quiere seguir realizando sumas o no_
 
 ## Herramientas empleadas
-* Editor de tecto **Visual Studio Code**
+* Editor de texto **Visual Studio Code**
 * Compilador **MinGW**
 * **CMD** de Windows
 

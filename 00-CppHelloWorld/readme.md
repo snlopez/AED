@@ -15,7 +15,7 @@ _Contar con las herramientas necesarias para abordar la resolución de los traba
 _Se creo un archivo **hello.cpp** el cual mostrara por una salida el mensaje **"Hello, World!"**_
 
 ## Herramientas empleadas
-* Editor de tecto **Visual Studio Code**
+* Editor de texto **Visual Studio Code**
 * Compilador **MinGW**
 * **CMD** de Windows
 
