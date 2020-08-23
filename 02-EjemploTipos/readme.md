@@ -30,7 +30,7 @@ indicando donde se produjo el problema_
 ### Implementacion
 _Desde el **CMD** posicionarse dentro de la carpeta del proyecto_
 
-_Compilar el **EjemploTipos.cpp** y crear como salida el ejecutable **tipos.exe**_
+_Compilar el **EjemploTipos.cpp** y crear como salida el ejecutable **Ejemplotipos.exe**_
 ```
 g++ EjemploTipos.cpp -o tipos.exe
 ```
