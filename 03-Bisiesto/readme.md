@@ -9,7 +9,7 @@ IsBisiesto: N --> B / p ^ (¬q v r)
 # Bisiesto
 
 ## Objetivo
-_Demostrar el usod e operadores booleanos y expresiones complejas_
+_Demostrar el uso de operadores booleanos y expresiones complejas_
 
 ## Temas
 * Expresiones
@@ -24,8 +24,10 @@ _Demostrar el usod e operadores booleanos y expresiones complejas_
 _Dado un año determinar si es bisiesto_
 
 ## Hipotesis
-_Debe ser un año divisible por **4** _
-_**NO** deb ser divisible por **100**, excepto por **400**_
+_Debe ser un año divisible por **4**_
+
+_**NO** debe ser divisible por **100**, excepto por **400**_
+
 _Debe ser posterior a **1582**_
 
 ## Restricciones
