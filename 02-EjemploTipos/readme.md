@@ -22,6 +22,9 @@ _Se creo un archivo **EjemploTipos.cpp** en el cual se realizan varias pruebas d
 _Las pruebas se realizaron mediante el uso de **assert** el cual analiza una condicion, que de cumplirse dejara que el programa proceda, de lo contrario lo interrupirá
 indicando donde se produjo el problema_
 
+_Se agregó un **system("pause()")** al final del programa para que al finalizar, este se detenga esperando que se presione una tecla cualquiera. De esta manera
+sepodra visualizar mas facilmente si se produjo algun error (acusado por los assert) o si el programa finalizo correctamente_
+
 ## Herramientas empleadas
 * Editor de texto **Visual Studio Code**
 * Compilador **MinGW**
