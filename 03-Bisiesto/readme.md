@@ -1,11 +1,4 @@
 
-
-* Logica de la funcion
-IsBisiesto: N --> B / p ^ (¬q v r)
-
-
-
-
 # Bisiesto
 
 ## Objetivo
