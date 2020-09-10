@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdint>
+#include <math.h>
 
 using namespace std;
 
@@ -11,6 +12,41 @@ struct Color{
     uint8_t r;
     uint8_t g;
     uint8_t b;
+};
+
+struct Punto{
+    float x;
+    float y;
+};
+
+struct Triangulo{
+    Punto a;
+    Punto b;
+    Punto c;
+    Color color;
+    float base = c.x - a.x;
+    float altura = b.y - a.y;
+    float GetPerimetroTriangulo(){
+        float ab, ac, bc, res;
+        ab = GetDistanciaPuntos(a, b);
+        ac = GetDistanciaPuntos(a, c);
+        bc = GetDistanciaPuntos(b, c);
+        res = (int)( (ab + ac + bc) * 100 + 0.5 );
+
+        return res/100;
+    };
+    float GetAreaTriangulo(){
+        float base, h, res;
+        Punto m;
+        
+        base = GetDistanciaPuntos(a, c);
+        m.x = (a.x + c.x) / 2;
+        m.y = (a.y + c.y) / 2;
+        h = GetDistanciaPuntos(b, m);
+        res = (int) ( ((base * h) /2 ) * 100 + 0.5);
+        
+        return res /100;
+    };
 };
 
 
@@ -28,6 +64,12 @@ Color RestarColor(Color, Color);
 Color GetComplementarioRGB(Color);
 
 string GetHtmlHexRGB(Color);
+
+bool PuntoIsIgual(Punto, Punto);
+
+float GetDistanciaPuntos(Punto, Punto);
+
+float GetDistanciaAlOrigen(Punto);
 */
 
 /********************************************************************************************************/
@@ -83,6 +125,26 @@ string GetHtmlHexRGB(Color color){
     return  res;
 }
 
+bool PuntoIsIgual(Punto a, Punto b){
+    if(a.x == b.x && a.y == b.y){
+       return true; 
+    }
+    return false;
+};
+
+float GetDistanciaPuntos(Punto a, Punto b){
+    float res;
+    res = (int) (sqrt( pow( (a.x - b.x), 2) +  pow( (a.y - b.y), 2) ) * 100 + 0.5);
+    res = res/100;
+    return res;
+};
+
+float GetDistanciaAlOrigen(Punto a){
+    float res;
+    res = (int) (sqrt( pow( (a.x), 2) +  pow( (a.y), 2) ) * 100 + 0.5);
+    res = res/100;
+    return res;
+};
 
 /********************************************************************************************************/
 /***************************************  VRIABLES GLOBALES  ********************************************/

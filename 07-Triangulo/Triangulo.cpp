@@ -1,26 +1,15 @@
-#include <iostream>
-
-using namespace std;
-
-struct punto{
-    unsigned x;
-    unsigned y;
-};
-
-struct Triangulo{
-    punto a;
-    punto b;
-    punto c;
-    unsigned base = c.x - a.x;
-    unsigned altura = b.y - a.y;
-    unsigned GetPerimetro(){
-        return;
-    };
-};
-
+#include "header.h"
+#include <assert.h>
 
 
 
 int main(){
+    Triangulo t1, t2;
+    t1.p1 = {2,8};
+    t1.p2 = {0,1};
+    t1.p3 = {1,2};
 
+    t2.p1 = {1,4};
+    t2.p2 = {2,3};
+    t2.p3 = {4,0};
 }
