@@ -4,10 +4,6 @@
 
 using namespace std;
 
-/********************************************************************************************************/
-/*****************************************  ESTRUCTURAS  ************************************************/
-/********************************************************************************************************/
-
 struct Color{
     uint8_t r;
     uint8_t g;
@@ -18,63 +14,6 @@ struct Punto{
     float x;
     float y;
 };
-
-struct Triangulo{
-    Punto p1;
-    Punto p2;
-    Punto p3;
-    Color color;
-    float base = p3.x - p1.x;
-    float altura = p2.y - p1.y;
-    float GetPerimetroTriangulo(){
-        float p1p2, p1p3, p2p3, res;
-        p1p2 = GetDistanciaPuntos(p1, p2);
-        p1p3 = GetDistanciaPuntos(p1, p3);
-        p2p3 = GetDistanciaPuntos(p2, p3);
-        res = (int)( (p1p2 + p1p3 + p2p3) * 100 + 0.5 );
-
-        return res/100;
-    };
-    float GetAreaTriangulo(){
-        float base, h, res;
-        Punto m;
-        
-        base = GetDistanciaPuntos(p1, p3);
-        m.x = (p1.x + p3.x) / 2;
-        m.y = (p1.y + p3.y) / 2;
-        h = GetDistanciaPuntos(b, m);
-        res = (int) ( ((base * h) /2 ) * 100 + 0.5);
-        
-        return res /100;
-    };
-};
-
-
-/********************************************************************************************************/
-/*****************************************  PROTOTIPOS  *************************************************/
-/********************************************************************************************************/
-
-/*
-Color MezclarColor(Color, Color, int);
-
-Color SumarColor(Color, Color);
-
-Color RestarColor(Color, Color);
-
-Color GetComplementarioRGB(Color);
-
-string GetHtmlHexRGB(Color);
-
-bool PuntoIsIgual(Punto, Punto);
-
-float GetDistanciaPuntos(Punto, Punto);
-
-float GetDistanciaAlOrigen(Punto);
-*/
-
-/********************************************************************************************************/
-/******************************************  FUNCIONES  *************************************************/
-/********************************************************************************************************/
 
 Color MezclarColor(Color color1, Color color2, int porcentajeColor1){
     Color res;
@@ -125,6 +64,9 @@ string GetHtmlHexRGB(Color color){
     return  res;
 }
 
+const struct Color red = {255,0,0}, blue = {0,0,255}, green = {0,255,0}, cyan = SumarColor(blue, green), magenta = SumarColor(red, blue),
+                yellow = SumarColor(red, green), black = RestarColor(red, yellow), white = SumarColor(red, cyan);
+
 bool PuntoIsIgual(Punto a, Punto b){
     if(a.x == b.x && a.y == b.y){
        return true; 
@@ -146,11 +88,80 @@ float GetDistanciaAlOrigen(Punto a){
     return res;
 };
 
-/********************************************************************************************************/
-/***************************************  VRIABLES GLOBALES  ********************************************/
-/********************************************************************************************************/
+struct Triangulo{
+    Punto p1;
+    Punto p2;
+    Punto p3;
+    Color color;
+    float base = p3.x - p1.x;
+    float altura = p2.y - p1.y;
+    float GetPerimetroTriangulo(){
+        float p1p2, p1p3, p2p3, res;
+        p1p2 = GetDistanciaPuntos(p1, p2);
+        p1p3 = GetDistanciaPuntos(p1, p3);
+        p2p3 = GetDistanciaPuntos(p2, p3);
+        res = (int)( (p1p2 + p1p3 + p2p3) * 100 + 0.5 );
 
-const struct Color red = {255,0,0}, blue = {0,0,255}, green = {0,255,0}, cyan = SumarColor(blue, green), magenta = SumarColor(red, blue);
-const struct Color yellow = SumarColor(red, green), black = RestarColor(red, yellow), white = SumarColor(red, cyan);
+        return res/100;
+    };
+    float GetAreaTriangulo(){
+        float base, h, res;
+        Punto m;
+        
+        base = GetDistanciaPuntos(p1, p3);
+        m.x = (p1.x + p3.x) / 2;
+        m.y = (p1.y + p3.y) / 2;
+        h = GetDistanciaPuntos(p2, m);
+        res = (int) ( ((base * h) /2 ) * 100 + 0.5);
+        
+        return res /100;
+    };
+};
+
+struct Poligono{
+    vector<Punto> p;
+    Color color;
+    void AddVertice(Punto a){
+        p.push_back(a);
+    };
+    Punto GetVertice(int posicion){
+        if(posicion < p.size()){
+            return p[posicion];
+        }
+        return {0.000001,0.000001};
+    };
+    bool SetVertice(Punto a, int posicion){
+        if(posicion < p.size()){
+            p[posicion] = a;
+            return true;
+        }
+        return false;
+    };
+    bool RemoveVertice(int posicion){
+        if(posicion < p.size()){
+            p.erase(p.begin()+ posicion );
+            return true;
+        }
+        return false;
+    };
+    int GetCantidadLados(){
+        return p.size();
+    };
+    float GetPerimetro(){
+        float res = 0;
+        int i;
+
+        if(p.size() > 0){
+            res = GetDistanciaPuntos(p[0], p.back());
+        
+            for(i=0; i< (p.size() -1 ); i++){
+                res += GetDistanciaPuntos(p[i], p[(i+1)]);
+            }
+        }
+        return res;
+    };
+};
+
+
 
 
