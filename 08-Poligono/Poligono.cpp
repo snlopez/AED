@@ -1,32 +1,27 @@
-#include "header.h"
-#include <assert.h>
-#include <vector>
+#include "poligono.h"
+#include <math.h>
 
 
-int main(){
-    Punto p1 = {0,0}, p2 = {0,1}, p3 = {1,3.523}, p4 = {1,0}, p5 = {3,2};
-    Poligono pol;
-    pol.p = {p1, p2, p3, p4, p5};
-    
-    assert( 5 == pol.GetCantidadLados());
-    assert( (float) 13.67 == pol.GetPerimetro());
+bool PuntoIsIgual(Punto a, Punto b){
+    if(a.x == b.x && a.y == b.y){
+       return true; 
+    }
+    return false;
+};
 
-    pol.RemoveVertice(4);
+double GetDistanciaPuntos(Punto a, Punto b){
+    double res;
+    int parcial;
+    parcial = (sqrt( pow( (a.x - b.x), 2) +  pow( (a.y - b.y), 2) ) * 100 + 0.5);
+    res = parcial;
+    res = res/100;
+    return res;
+};
 
-    assert( 4 == pol.GetCantidadLados());
-    assert( (float) 8.23 == pol.GetPerimetro());
-
-    pol.AddVertice({3,2});
-
-    assert( 5 == pol.GetCantidadLados());
-    assert( (float) 13.67 == pol.GetPerimetro());
-
-    pol.SetVertice({0,0}, 4);
-
-    assert( 5 == pol.GetCantidadLados());
-    assert( (float) 8.23 == pol.GetPerimetro());
-
-    
-    system("pause");
-    return 0;
-}
+double GetDistanciaAlOrigen(Punto a){
+    double res;
+    int parcial;
+    parcial = (sqrt( pow( (a.x), 2) +  pow( (a.y), 2) ) * 100 + 0.5);
+    res = parcial/100;
+    return res;
+};
