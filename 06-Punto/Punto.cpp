@@ -1,22 +1,23 @@
-#include "header.h"
+#include "punto.h"
 #include <assert.h>
 
+bool PuntoIsIgual(Punto a, Punto b){
+    if(a.x == b.x && a.y == b.y){
+       return true; 
+    }
+    return false;
+};
 
+double GetDistanciaPuntos(Punto a, Punto b){
+    double res;
+    res = (int) (sqrt( pow( (a.x - b.x), 2) +  pow( (a.y - b.y), 2) ) * 100 + 0.5);
+    res = res/100;
+    return res;
+};
 
-
-int main(){
-    Punto p1 = {0,3}, p2 = {2,8}, p3 = {4,0}, p4 = {2,8};
-    float buffer;
-    assert(false == PuntoIsIgual(p1, p2));
-    assert(PuntoIsIgual(p2, p4));
-        
-    assert( 0 == GetDistanciaPuntos(p2, p2) );
-    assert( (float)5.39 == GetDistanciaPuntos(p1, p2) );
-
-    assert( 3 == GetDistanciaAlOrigen(p1) );
-    assert( (float)8.25 == GetDistanciaAlOrigen(p2) );
-
-    system("pause");
-    return 0;
-}
-
+double GetDistanciaAlOrigen(Punto a){
+    double res;
+    res = (int) (sqrt( pow( (a.x), 2) +  pow( (a.y), 2) ) * 100 + 0.5);
+    res = res/100;
+    return res;
+};
