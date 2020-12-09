@@ -1,4 +1,4 @@
-#include <cstdint>
+#include <iostream>
 #include <array>
 
 struct Color{
@@ -10,12 +10,11 @@ struct Color{
 struct Punto{
     double x;
     double y;
-    bool empty = true;
+    Punto* next;
 };
 
-
 struct Poligono{
-    std::array <Punto, 10> puntos;
+    Punto* primerPunto;
     Color color;
 };
 
@@ -79,15 +78,9 @@ struct Poligono{
 /********************************************************************************************************/
 /*****************************************  PROTOTIPOS  *************************************************/
 /********************************************************************************************************/
-
 bool PuntoIsIgual(Punto, Punto);
 double GetDistanciaPuntos(Punto, Punto);
+double GetDistanciaAlOrigen(Punto);
 
-bool AddVertice(Poligono&, Punto&);
-
-Punto GetVertice(Poligono&, int);
-bool SetVertice(Poligono&, int, Punto&);
-bool RemoveVertice(Poligono&, int);
-int GetCantidadLados(Poligono&);
-double GetPerimetro(Poligono&);
-
+void AddVertice(Poligono&, Punto&);
+Punto GetVertice();
