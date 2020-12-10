@@ -40,11 +40,11 @@ bool RemoveVertice(Poligono&, int);
 int GetCantidadLados(Poligono&);
 double GetPerimetro(Poligono&);
 
-bool InsertarPoligonos(ofstream&, const Poligono&);
+bool InsertarPoligono(ofstream&, const Poligono&);
 bool InsertarColor(ofstream&, const Color&);
 bool InsertarPuntos(ofstream&, const Poligono&);
 bool ExtraerPoligonos(ifstream& , std::array<Poligono,poligonosMax>&);
 bool ExtraerUnPoligono(ifstream& , Poligono&);
-bool ExtraerPuntos(ofstream&, std::array<Punto,puntosMax>&);
-bool ExtraerUnPunto(ofstream&, Punto&);
-bool ExtraerColor(ofstream&, Color&);
+bool ExtraerColor(ifstream&, Color&);
+bool ExtraerPuntos(ifstream&, std::array<Punto,puntosMax>&);
+void FiltrarPoligonosConPerimetroMayor(double, string, string);

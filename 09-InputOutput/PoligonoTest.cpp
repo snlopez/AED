@@ -17,11 +17,16 @@ int main(){
             p9 = {2,3},
             p10 = {1,1},
             aux = {2,4};
-    std::array <Poligono, poligonosMax> pol, polIN;
+    array <Poligono, poligonosMax> pol, polIN;
     
     ifstream inFile;
     ofstream outFile;
     
+    pol[0].color = {12,25,35};
+    pol[1].color = {0,255,235};
+    pol[2].color = {122,125,135};
+    pol[3].color = {142,245,5};
+
     assert(AddVertice(pol[0], p1));
     assert(AddVertice(pol[0], p2));
     assert(AddVertice(pol[0], p3));
@@ -76,15 +81,13 @@ int main(){
     assert( 10.24 == GetPerimetro(pol[3]) );
 
     outFile.open("todosLosPoligonos.txt");
-    assert( InsertarPoligonos( outFile, pol[0]) );
-    assert( InsertarPoligonos( outFile, pol[1]) );
-    assert( InsertarPoligonos( outFile, pol[2]) );
-    assert( InsertarPoligonos( outFile, pol[3]) );
+    assert( InsertarPoligono( outFile, pol[0]) );
+    assert( InsertarPoligono( outFile, pol[1]) );
+    assert( InsertarPoligono( outFile, pol[2]) );
+    assert( InsertarPoligono( outFile, pol[3]) );
     outFile.close();
 
-    inFile.open("todosLosPoligonos.txt");
-
-    assert(ExtraerPoligonos(inFile, polIN));
+    FiltrarPoligonosConPerimetroMayor(10, "todosLosPoligonos.txt", "poligonosFiltrados.txt");    
 
     system("pause");
     return 0;

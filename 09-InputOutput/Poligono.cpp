@@ -1,6 +1,7 @@
 #include "poligono.h"
 #include <math.h>
 #include <iostream>
+#include <sstream> // me permite utilizar extraer una linea del fichero y manejarla como un buffer en lugar de un string
 
 using namespace std;
 
@@ -115,15 +116,14 @@ double GetPerimetro(Poligono& pol){
     return dist;
 }
 
-bool InsertarPoligonos(ofstream& out, const Poligono& pol){
+bool InsertarPoligono(ofstream& out, const Poligono& pol){
     InsertarColor(out, pol.color);
     InsertarPuntos(out, pol);
-    
     return true;
 }
 
 bool InsertarColor(ofstream& out, const Color& c){
-    out << static_cast <int> (c.r) << " " << static_cast <int> (c.g) << " " << static_cast <int> (c.b) << " ";
+    out << static_cast <int> (c.r) << " " << static_cast <int> (c.g) << " " << static_cast <int> (c.b) ;
     return true;
 }
 
@@ -132,21 +132,86 @@ bool InsertarPuntos(ofstream& out, const Poligono& p){
 
     for(i=0; i <  p.puntos.max_size(); i++){
         if( not(p.puntos[i].empty) ){
-            out << "(" << p.puntos[i].x << "," << p.puntos[i].y << ") ";
+            out << " " << static_cast <int> (p.puntos[i].x * 100) << " " << static_cast <int> (p.puntos[i].y * 100) ;
         }
     }
-    out << "\n";
+    out << "/\n";
     return true;
 }
 
-bool ExtraerPoligonos(ifstream& in, std::array<Poligono,4>& polArray){
-    int i = 0;
-    for(i; i< polArray.max_size(); i++){
-        ExtraerUnPoligono(in, polArray[i]);
+bool ExtraerPoligonos(ifstream& in, std::array<Poligono,poligonosMax>& polArray){
+    int i=0;
+    if(in.good()){
+        while ( not(in.eof()) && i < polArray.max_size()){
+            ExtraerUnPoligono(in, polArray[i]);
+            i++;
+        }
+        return true;
+    }else{
+        return false;   
     }
-    return true;
+    
 }
+
 bool ExtraerUnPoligono(ifstream& in, Poligono& pol){
     
+    ExtraerColor(in, pol.color);
+    ExtraerPuntos(in, pol.puntos);
     return true;
+}
+
+bool ExtraerColor(ifstream& in, Color& c){
+    int aux;
+    if(in.good()){
+        in >> aux;
+        c.r = aux;
+        in >> aux;
+        c.g = aux;
+        in >> aux;
+        c.b = aux;
+        return true;
+    }else
+    {
+        return false;
+    }
+}
+
+bool ExtraerPuntos(ifstream& in, std::array<Punto,puntosMax>& puntos){
+    char aux;
+    int i=0, num;
+    
+    do{
+        in.get(aux);
+        if( aux != '/' ){//leo todos los puntos restantes de la linea
+            in >> num;
+            puntos[i].x = num/100;
+            
+            in >> num;
+            puntos[i].y = num/100;
+            puntos[i].empty = false;
+
+            i++;
+        }
+    }while(aux != '/' && i< puntos.max_size());
+    return true;
+}
+
+void FiltrarPoligonosConPerimetroMayor(double perimetroMax, string fileIN, string fileOUT){
+    array <Poligono, poligonosMax> pol;
+    ifstream in;
+    ofstream out;
+    int i=0;
+
+    in.open(fileIN);
+    ExtraerPoligonos(in, pol);
+    in.close();
+
+    out.open(fileOUT);
+    for(i=0; i< pol.max_size(); i++){
+        if( GetPerimetro(pol[i]) > perimetroMax){
+            InsertarPoligono(out, pol[i]);
+        }
+    }
+    out.close();
+
 }
