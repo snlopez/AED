@@ -1,10 +1,16 @@
-#include <iostream>
+#include <cstdint>
 #include <array>
+#include <fstream>
+
+using namespace std;
+
+#define puntosMax 10
+#define poligonosMax 4
 
 struct Color{
-    uint8_t r;
-    uint8_t g;
-    uint8_t b;
+    uint8_t r = 0;
+    uint8_t g = 0;
+    uint8_t b = 0;
 };
 
 struct Punto{
@@ -13,74 +19,33 @@ struct Punto{
     Punto* next;
 };
 
+
 struct Poligono{
-    Punto* primerPunto;
+    Punto primerPunto;
     Color color;
+    Poligono* next;
 };
 
-
-/*
-    void AddVertice(Punto a){
-        //p.push_back(a);
-        if(completos < length){
-            p[completos] = a;
-            completos = completos + 1;
-        }
-    };
-    Punto GetVertice(int posicion){
-        if(posicion < length){
-            return p[posicion];
-        }
-        return {0.000001,0.000001};
-    };
-    bool SetVertice(Punto a, int posicion){
-        if(posicion < length){
-            p[posicion] = a;
-            return true;
-        }
-        return false;
-    };
-    bool RemoveVertice(int posicion){
-        int i = posicion;
-        if(posicion < length){
-            for(i; i < (length -1) ; i++){
-                p[i] = p[(i+1)];
-            }
-            completos --;
-            return true;
-        }
-        return false;
-    };
-    unsigned GetCantidadLados(){
-        if(completos > 2){
-            return completos;
-        }
-        return 1;
-    };
-    double GetPerimetro(){
-        double res = 0;
-        int i;
-
-        if(completos > 2){
-            res = GetDistanciaPuntos(p[0], p[(completos - 1)]);
-        
-            for(i=0; i< (completos -1 ); i++){
-                res += GetDistanciaPuntos(p[i], p[(i+1)]);
-            }
-            
-            return res;
-        }
-
-        return 0;
-        
-    };*/
 
 /********************************************************************************************************/
 /*****************************************  PROTOTIPOS  *************************************************/
 /********************************************************************************************************/
+
 bool PuntoIsIgual(Punto, Punto);
 double GetDistanciaPuntos(Punto, Punto);
-double GetDistanciaAlOrigen(Punto);
 
-void AddVertice(Poligono&, Punto&);
-Punto GetVertice();
+bool AddVertice(Poligono&, Punto&);
+Punto GetVertice(Poligono&, int);
+bool SetVertice(Poligono&, int, Punto&);
+bool RemoveVertice(Poligono&, int);
+int GetCantidadLados(Poligono&);
+double GetPerimetro(Poligono&);
+
+bool InsertarPoligono(ofstream&, const Poligono&);//aca
+bool InsertarColor(ofstream&, const Color&);
+bool InsertarPuntos(ofstream&, const Poligono&);
+bool ExtraerPoligonos(ifstream& , Poligono&);
+bool ExtraerUnPoligono(ifstream& , Poligono&);
+bool ExtraerColor(ifstream&, Color&);
+bool ExtraerPuntos(ifstream&, Punto&);
+void FiltrarPoligonosConPerimetroMayor(double, string, string);
