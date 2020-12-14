@@ -2,6 +2,7 @@
 #include <math.h>
 #include <iostream>
 #include <sstream> // me permite utilizar extraer una linea del fichero y manejarla como un buffer en lugar de un string
+#include <assert.h>
 
 using namespace std;
 
@@ -20,17 +21,16 @@ double GetDistanciaPuntos(Punto a, Punto b){
     res = res/100;
     return res;
 }
-/*
-bool AddVertice(Poligono& pol, Punto& p){
-    Punto* aux = pol.primerPunto;
 
-    if( pol.primerPunto == NULL){
-        pol.primerPunto = &p;
-        pol.primerPunto->next = NULL;
-        cout << "primer punto NULL\n";
+bool AddVertice(Poligono& pol, Punto& p){
+    Punto* aux = NULL;
+
+    if( pol.empty ){
+        pol.primerPunto = p;
+        pol.primerPunto.next = aux;
+        pol.empty = false;
     }else{
-        cout << "nuevo punto NULL\n";
-        
+        aux = &pol.primerPunto;
         while(aux != NULL){
             if(aux->x == p.x && aux->y == p.y){
                 return false;//ya existe el punto
@@ -38,15 +38,19 @@ bool AddVertice(Poligono& pol, Punto& p){
                 aux = aux->next;
             }
         }
+        aux = new Punto;
         //si llego aca es porque no hay un punto igual cargado
-        p.next = pol.primerPunto;
-        pol.primerPunto = &p;
+        aux->x = pol.primerPunto.x;
+        aux->y = pol.primerPunto.y;
+        aux->next = pol.primerPunto.next;
+        pol.primerPunto = p;
+        pol.primerPunto.next = aux;
     }
     return true;
 }
 
 Punto GetVertice(Poligono& pol, int n){
-    Punto* aux = pol.primerPunto;
+    Punto* aux = &pol.primerPunto;
     Punto vacio;
     int i = 0;
 
@@ -54,19 +58,22 @@ Punto GetVertice(Poligono& pol, int n){
         if(i == n){
             return *aux;
         }
+        i++;
+        aux = aux->next;
     }
-    return vacio;
+    assert(false);
 }
 
 bool SetVertice(Poligono& pol, int n, Punto& p){
     int i = 0;
-    Punto* aux;
+    Punto* aux = &pol.primerPunto;
     while(aux != NULL && i <= n){
         if(i == n){
             aux->x = p.x;
             aux->y = p.y;
             return true;
         }
+        aux = aux->next;
         i++;
     }
     return false;
@@ -74,18 +81,22 @@ bool SetVertice(Poligono& pol, int n, Punto& p){
 }
 
 bool RemoveVertice(Poligono& pol, int n){
-    Punto* aux = pol.primerPunto;
-    int i = 1;
+    Punto* aux = &pol.primerPunto;
+    Punto* rmv;
+    int i = 0;
 
-    if(n=0){
-        pol.primerPunto = pol.primerPunto->next;
+    if(n == 0){
+        pol.primerPunto = *pol.primerPunto.next;
         return true;
     }else{
-        while(aux != NULL && i <= n){
-            if(i == n){
+        while(aux != NULL && i < n){
+            if( (i + 1) == n){
+                rmv = aux->next;
                 aux->next = aux->next->next;
+                delete rmv;
                 return true;
             }
+            aux = aux->next;
             i++;
         }
     }
@@ -94,7 +105,7 @@ bool RemoveVertice(Poligono& pol, int n){
 
 int GetCantidadLados(Poligono& pol){
     int lados=0;
-    Punto* aux = pol.primerPunto;
+    Punto* aux = &pol.primerPunto;
     
     while(aux != NULL){
         aux = aux->next;
@@ -107,7 +118,6 @@ int GetCantidadLados(Poligono& pol){
     }
     
 }
-*/
 
 void FiltrarPoligonosConPerimetroMayor(double perimetroMax, string fileIN, string fileOUT){
     Poligono pol;
@@ -132,7 +142,6 @@ void FiltrarPoligonosConPerimetroMayor(double perimetroMax, string fileIN, strin
     while(aux != NULL){
         if( GetPerimetro(*aux) > perimetroMax){
             InsertarPoligono(out, *aux);
-            out << "/";
         }
         aux = aux->next;
     }
@@ -147,13 +156,11 @@ bool ExtraerPoligonos(ifstream& in, Poligono& pol){
     if(in.good()){
         while ( not(in.eof()) ){
             aux = new Poligono;
-            cout << "extraer poligonos \n";
             ExtraerUnPoligono(in, *aux);
             aux->next = auxPOL;
             auxPOL = aux;
             in.get(c);//tomo el \n para quedar en el oef
         }
-        cout << "FIN EXTRAER\n";
         pol = *auxPOL;
         return true;
     }else{
@@ -162,10 +169,12 @@ bool ExtraerPoligonos(ifstream& in, Poligono& pol){
 }
 
 bool ExtraerUnPoligono(ifstream& in, Poligono& pol){
-    cout << "extraer UN poligono\n";
     ExtraerColor(in, pol.color);
     ExtraerPuntos(in, pol.primerPunto);
-    return true;
+    if(in.good()){
+        return true;
+    }
+    return false;
 }
 
 bool ExtraerColor(ifstream& in, Color& c){
@@ -205,18 +214,28 @@ bool ExtraerPuntos(ifstream& in, Punto& primerP){
         }
     }while(c != '/' && not(in.eof()) );
     primerP = *p;
-    return true;
+    if(in.good()){
+        return true;
+    }
+    return false;
 }
 
 bool InsertarPoligono(ofstream& out, const Poligono& pol){
     InsertarColor(out, pol.color);
     InsertarPuntos(out, pol);
-    return true;
+    out << "/";
+    if(out.good()){
+        return true;
+    }
+    return false;
 }
 
 bool InsertarColor(ofstream& out, const Color& c){
     out << "\n" << static_cast <int> (c.r) << " " << static_cast <int> (c.g) << " " << static_cast <int> (c.b) ;
-    return true;
+    if(out.good()){
+        return true;
+    }
+    return false;
 }
 
 bool InsertarPuntos(ofstream& out, const Poligono& p){
@@ -227,7 +246,10 @@ bool InsertarPuntos(ofstream& out, const Poligono& p){
         out << " " << static_cast <int> (aux->x * 100) << " " << static_cast <int> (aux->y * 100) ;
         aux = aux->next;
     }
-    return true;
+    if(out.good()){
+        return true;
+    }
+    return false;
 }
 
 double GetPerimetro(Poligono& pol){

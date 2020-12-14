@@ -22,6 +22,7 @@ struct Punto{
 
 struct Poligono{
     Punto primerPunto;
+    bool empty = true;
     Color color;
     Poligono* next;
 };
