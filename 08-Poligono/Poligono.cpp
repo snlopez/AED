@@ -86,7 +86,13 @@ int GetCantidadLados(Poligono& pol){
             lados++;
         }
     }
-    return lados;
+    if(lados > 0 && lados <=2){
+        return 1;
+    }
+    if(lados > 2){
+        return lados;
+    }
+    return 0;
 }
 
 double GetPerimetro(Poligono& pol){

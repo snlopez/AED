@@ -111,12 +111,13 @@ int GetCantidadLados(Poligono& pol){
         aux = aux->next;
         lados++;
     }
+    if(lados > 0 && lados <=2){
+        return 1;
+    }
     if(lados > 2){
         return lados;
-    }else{
-        return 0;
     }
-    
+    return 0;
 }
 
 void FiltrarPoligonosConPerimetroMayor(double perimetroMax, string fileIN, string fileOUT){
